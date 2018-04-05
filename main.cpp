@@ -6,6 +6,7 @@
 #include <GLM/gtc/matrix_transform.hpp>
 #include <GLM/gtc/constants.hpp>
 #include <SOIL.h>
+//#include <GL/glut.h>
 
 // GUI Library
 #include <imgui.h>
@@ -44,6 +45,8 @@ int viewMode = 3;
 GLuint skyboxTexture;
 GLuint diffuseTexture, specularTexture;
 GLuint moonTexture, sunTexture;
+GLuint mercuryTexture,venusTexture,marsTexture,jupiterTexture,saturnTexture,uranusTexture,neptuneTexture;
+
 
 enum
 {
@@ -125,6 +128,56 @@ void Initialize()
         SOIL_CREATE_NEW_ID,
         SOIL_FLAG_INVERT_Y | SOIL_FLAG_NTSC_SAFE_RGB | SOIL_FLAG_COMPRESS_TO_DXT
     );
+
+	mercuryTexture = SOIL_load_OGL_texture
+	(
+		ASSETS"textures/mercurymap.jpg",
+		SOIL_LOAD_AUTO,
+		SOIL_CREATE_NEW_ID,
+		SOIL_FLAG_INVERT_Y | SOIL_FLAG_NTSC_SAFE_RGB | SOIL_FLAG_COMPRESS_TO_DXT
+	);
+	venusTexture = SOIL_load_OGL_texture
+	(
+		ASSETS"textures/venusTexture.jpg",
+		SOIL_LOAD_AUTO,
+		SOIL_CREATE_NEW_ID,
+		SOIL_FLAG_INVERT_Y | SOIL_FLAG_NTSC_SAFE_RGB | SOIL_FLAG_COMPRESS_TO_DXT
+	);
+	marsTexture = SOIL_load_OGL_texture
+	(
+		ASSETS"textures/marsTexture.jpg",
+		SOIL_LOAD_AUTO,
+		SOIL_CREATE_NEW_ID,
+		SOIL_FLAG_INVERT_Y | SOIL_FLAG_NTSC_SAFE_RGB | SOIL_FLAG_COMPRESS_TO_DXT
+	);
+	jupiterTexture = SOIL_load_OGL_texture
+	(
+		ASSETS"textures/jupiterTexture.jpg",
+		SOIL_LOAD_AUTO,
+		SOIL_CREATE_NEW_ID,
+		SOIL_FLAG_INVERT_Y | SOIL_FLAG_NTSC_SAFE_RGB | SOIL_FLAG_COMPRESS_TO_DXT
+	);
+	saturnTexture = SOIL_load_OGL_texture
+	(
+		ASSETS"textures/saturnTexture.jpg",
+		SOIL_LOAD_AUTO,
+		SOIL_CREATE_NEW_ID,
+		SOIL_FLAG_INVERT_Y | SOIL_FLAG_NTSC_SAFE_RGB | SOIL_FLAG_COMPRESS_TO_DXT
+	);
+	uranusTexture = SOIL_load_OGL_texture
+	(
+		ASSETS"textures/uranusTexture.jpg",
+		SOIL_LOAD_AUTO,
+		SOIL_CREATE_NEW_ID,
+		SOIL_FLAG_INVERT_Y | SOIL_FLAG_NTSC_SAFE_RGB | SOIL_FLAG_COMPRESS_TO_DXT
+	);
+	neptuneTexture = SOIL_load_OGL_texture
+	(
+		ASSETS"textures/neptuneTexture.jpg",
+		SOIL_LOAD_AUTO,
+		SOIL_CREATE_NEW_ID,
+		SOIL_FLAG_INVERT_Y | SOIL_FLAG_NTSC_SAFE_RGB | SOIL_FLAG_COMPRESS_TO_DXT
+	);
 
     sunTexture = SOIL_load_OGL_texture
     (
@@ -385,12 +438,12 @@ void Render()
 		// Binding diffuse texture
 		glUniform1i(dtLoc, 0);
 		glActiveTexture(GL_TEXTURE0);
-		glBindTexture(GL_TEXTURE_2D, moonTexture);
+		glBindTexture(GL_TEXTURE_2D, mercuryTexture);
 
 		// Binding specular texture
 		glUniform1i(stLoc, 1);
 		glActiveTexture(GL_TEXTURE1);
-		glBindTexture(GL_TEXTURE_2D, moonTexture);
+		glBindTexture(GL_TEXTURE_2D, mercuryTexture);
 
 		// Passing MVP matrix
 		glUniformMatrix4fv(mLoc, 1, GL_FALSE, &modelMatrix[MERCURY][0][0]);
@@ -402,7 +455,7 @@ void Render()
 		// Passing up additional information
 		glUniform3fv(cLoc, 1, &cameraPosition[0]);
 
-		Primitive::DrawSphere();    // Moon
+		Primitive::DrawSphere();    // Mercury
 
 									// Unbinding textures
 		glActiveTexture(GL_TEXTURE1);
@@ -412,16 +465,18 @@ void Render()
 
 
 
+
+
 		//-----------------------------------------------------------------------------//
 		// Binding diffuse texture
 		glUniform1i(dtLoc, 0);
 		glActiveTexture(GL_TEXTURE0);
-		glBindTexture(GL_TEXTURE_2D, moonTexture);
+		glBindTexture(GL_TEXTURE_2D, venusTexture);
 
 		// Binding specular texture
 		glUniform1i(stLoc, 1);
 		glActiveTexture(GL_TEXTURE1);
-		glBindTexture(GL_TEXTURE_2D, moonTexture);
+		glBindTexture(GL_TEXTURE_2D, venusTexture);
 
 		// Passing MVP matrix
 		glUniformMatrix4fv(mLoc, 1, GL_FALSE, &modelMatrix[VENUS][0][0]);
@@ -447,12 +502,12 @@ void Render()
 		// Binding diffuse texture
 		glUniform1i(dtLoc, 0);
 		glActiveTexture(GL_TEXTURE0);
-		glBindTexture(GL_TEXTURE_2D, moonTexture);
+		glBindTexture(GL_TEXTURE_2D, marsTexture);
 
 		// Binding specular texture
 		glUniform1i(stLoc, 1);
 		glActiveTexture(GL_TEXTURE1);
-		glBindTexture(GL_TEXTURE_2D, moonTexture);
+		glBindTexture(GL_TEXTURE_2D, marsTexture);
 
 		// Passing MVP matrix
 		glUniformMatrix4fv(mLoc, 1, GL_FALSE, &modelMatrix[MARS][0][0]);
@@ -479,12 +534,12 @@ void Render()
 		// Binding diffuse texture
 		glUniform1i(dtLoc, 0);
 		glActiveTexture(GL_TEXTURE0);
-		glBindTexture(GL_TEXTURE_2D, moonTexture);
+		glBindTexture(GL_TEXTURE_2D, jupiterTexture);
 
 		// Binding specular texture
 		glUniform1i(stLoc, 1);
 		glActiveTexture(GL_TEXTURE1);
-		glBindTexture(GL_TEXTURE_2D, moonTexture);
+		glBindTexture(GL_TEXTURE_2D, jupiterTexture);
 
 		// Passing MVP matrix
 		glUniformMatrix4fv(mLoc, 1, GL_FALSE, &modelMatrix[JUPITER][0][0]);
@@ -510,12 +565,12 @@ void Render()
 		// Binding diffuse texture
 		glUniform1i(dtLoc, 0);
 		glActiveTexture(GL_TEXTURE0);
-		glBindTexture(GL_TEXTURE_2D, moonTexture);
+		glBindTexture(GL_TEXTURE_2D, saturnTexture);
 
 		// Binding specular texture
 		glUniform1i(stLoc, 1);
 		glActiveTexture(GL_TEXTURE1);
-		glBindTexture(GL_TEXTURE_2D, moonTexture);
+		glBindTexture(GL_TEXTURE_2D, saturnTexture);
 
 		// Passing MVP matrix
 		glUniformMatrix4fv(mLoc, 1, GL_FALSE, &modelMatrix[SATURN][0][0]);
@@ -540,12 +595,12 @@ void Render()
 		// Binding diffuse texture
 		glUniform1i(dtLoc, 0);
 		glActiveTexture(GL_TEXTURE0);
-		glBindTexture(GL_TEXTURE_2D, moonTexture);
+		glBindTexture(GL_TEXTURE_2D, uranusTexture);
 
 		// Binding specular texture
 		glUniform1i(stLoc, 1);
 		glActiveTexture(GL_TEXTURE1);
-		glBindTexture(GL_TEXTURE_2D, moonTexture);
+		glBindTexture(GL_TEXTURE_2D, uranusTexture);
 
 		// Passing MVP matrix
 		glUniformMatrix4fv(mLoc, 1, GL_FALSE, &modelMatrix[URANUS][0][0]);
@@ -571,12 +626,12 @@ void Render()
 		// Binding diffuse texture
 		glUniform1i(dtLoc, 0);
 		glActiveTexture(GL_TEXTURE0);
-		glBindTexture(GL_TEXTURE_2D, moonTexture);
+		glBindTexture(GL_TEXTURE_2D, neptuneTexture);
 
 		// Binding specular texture
 		glUniform1i(stLoc, 1);
 		glActiveTexture(GL_TEXTURE1);
-		glBindTexture(GL_TEXTURE_2D, moonTexture);
+		glBindTexture(GL_TEXTURE_2D, neptuneTexture);
 
 		// Passing MVP matrix
 		glUniformMatrix4fv(mLoc, 1, GL_FALSE, &modelMatrix[NEPTUNE][0][0]);
@@ -670,6 +725,7 @@ void OnWindowResized(GLFWwindow* win, int w, int h)
     projectionMatrix = perspective(radians(40.0f), ratio, 0.1f, 1000.0f);
 }
 
+
 int main()
 {
     // start GL context and O/S window using the GLFW helper library
@@ -745,3 +801,5 @@ int main()
     Cleanup();
     return 0;
 }
+
+
