@@ -1,3 +1,8 @@
+// Muhammad Ahmad 100518917
+// Harshan Mohanaraj 100520376
+// Rohil Arya 100585195
+// Yash Pandya
+
 #define GLM_ENABLE_EXPERIMENTAL
 
 #include <GLM/gtc/matrix_access.hpp>
@@ -74,7 +79,15 @@ enum
 
 
 bool astDestroyed = false;
+bool moonDestroyed = false;
+bool mercuryDestroyed = false;
 bool venusDestroyed = false;
+bool earthDestroyed = false;
+bool marsDestroyed = false;
+bool jupiterDestroyed = false;
+bool saturnDestroyed = false;
+bool uranusDestroyed = false;
+bool neptuneDestroyed = false;
 
 void Initialize()
 {
@@ -327,26 +340,29 @@ void Update(float deltaTime)
 	vec3 uranusPosition = vec3(cos(uranusOrbit), 0, sin(uranusOrbit)) * 70.0f;
 	vec3 neptunePosition = vec3(cos(neptuneOrbit), 0, sin(neptuneOrbit)) * 80.0f;
 
-
-	translation = translate(identity, earthPosition);
-	scaling = scale(identity, vec3(1)); // The earth stays the same size
-	rotation = rotate(identity, earthRotate, vec3(0, 1, 0));
-	modelMatrix[EARTH] = translation * rotation * scaling;
-
-	translation = translate(identity, moonPosition);
-	scaling = scale(identity, vec3(0.27)); // The moon is 27% the size of earth
-	rotation = rotate(identity, moonRotate, vec3(0, 1, 0));
-	modelMatrix[MOON] = translation * rotation * scaling;
+	if (!earthDestroyed) {
+		translation = translate(identity, earthPosition);
+		scaling = scale(identity, vec3(1)); // The earth stays the same size
+		rotation = rotate(identity, earthRotate, vec3(0, 1, 0));
+		modelMatrix[EARTH] = translation * rotation * scaling;
+	}
+	
+	if (!moonDestroyed) {
+		translation = translate(identity, moonPosition);
+		scaling = scale(identity, vec3(0.27)); // The moon is 27% the size of earth
+		rotation = rotate(identity, moonRotate, vec3(0, 1, 0));
+		modelMatrix[MOON] = translation * rotation * scaling;
+	}
 
 	scaling = scale(identity, vec3(3)); // Make the sun 10 times larger
 	modelMatrix[SUN] = scaling * identity;
 
-
-	translation = translate(identity, mercuryPosition);
-	scaling = scale(identity, vec3(0.3)); // The earth stays the same size
-	rotation = rotate(identity, mercuryRotate, vec3(0, 1, 0));
-	modelMatrix[MERCURY] = translation * rotation * scaling;
-
+	if (!mercuryDestroyed) {
+		translation = translate(identity, mercuryPosition);
+		scaling = scale(identity, vec3(0.3)); // The earth stays the same size
+		rotation = rotate(identity, mercuryRotate, vec3(0, 1, 0));
+		modelMatrix[MERCURY] = translation * rotation * scaling;
+	}
 	if (!venusDestroyed) {
 		translation = translate(identity, venusPosition);
 		scaling = scale(identity, vec3(1)); // The earth stays the same size
@@ -354,44 +370,49 @@ void Update(float deltaTime)
 		modelMatrix[VENUS] = translation * rotation * scaling;
 	}
 
-	translation = translate(identity, marsPosition);
-	scaling = scale(identity, vec3(0.7)); // The earth stays the same size
-	rotation = rotate(identity, marsRotate, vec3(0, 1, 0));
-	modelMatrix[MARS] = translation * rotation * scaling;
+	if (!marsDestroyed) {
+		translation = translate(identity, marsPosition);
+		scaling = scale(identity, vec3(0.7)); // The earth stays the same size
+		rotation = rotate(identity, marsRotate, vec3(0, 1, 0));
+		modelMatrix[MARS] = translation * rotation * scaling;
+	}
 
+	if (!jupiterDestroyed) {
+		translation = translate(identity, jupiterPosition);
+		scaling = scale(identity, vec3(5)); // The earth stays the same size
+		rotation = rotate(identity, jupiterRotate, vec3(0, 1, 0));
+		modelMatrix[JUPITER] = translation * rotation * scaling;
+	}
 
-	translation = translate(identity, jupiterPosition);
-	scaling = scale(identity, vec3(5)); // The earth stays the same size
-	rotation = rotate(identity, jupiterRotate, vec3(0, 1, 0));
-	modelMatrix[JUPITER] = translation * rotation * scaling;
+	if (!saturnDestroyed) {
+		translation = translate(identity, saturnPosition);
+		scaling = scale(identity, vec3(4)); // The earth stays the same size
+		rotation = rotate(identity, saturnRotate, vec3(0, 1, 0));
+		modelMatrix[SATURN] = translation * rotation * scaling;
+	}
 
+	if (!uranusDestroyed) {
+		translation = translate(identity, uranusPosition);
+		scaling = scale(identity, vec3(2)); // The earth stays the same size
+		rotation = rotate(identity, uranusRotate, vec3(0, 1, 0));
+		modelMatrix[URANUS] = translation * rotation * scaling;
+	}
 
-	translation = translate(identity, saturnPosition);
-	scaling = scale(identity, vec3(4)); // The earth stays the same size
-	rotation = rotate(identity, saturnRotate, vec3(0, 1, 0));
-	modelMatrix[SATURN] = translation * rotation * scaling;
-
-
-	translation = translate(identity, uranusPosition);
-	scaling = scale(identity, vec3(2)); // The earth stays the same size
-	rotation = rotate(identity, uranusRotate, vec3(0, 1, 0));
-	modelMatrix[URANUS] = translation * rotation * scaling;
-
-
-	translation = translate(identity, neptunePosition);
-	scaling = scale(identity, vec3(3)); // The earth stays the same size
-	rotation = rotate(identity, neptuneRotate, vec3(0, 1, 0));
-	modelMatrix[NEPTUNE] = translation * rotation * scaling;
-
+	if (!neptuneDestroyed) {
+		translation = translate(identity, neptunePosition);
+		scaling = scale(identity, vec3(3)); // The earth stays the same size
+		rotation = rotate(identity, neptuneRotate, vec3(0, 1, 0));
+		modelMatrix[NEPTUNE] = translation * rotation * scaling;
+	}
 
 	if (glfwGetKey(window, GLFW_KEY_P)) {
 		ast = true;
-		astx = rand() % 20 + 1;
-		astz = rand() % 20 + 1;
+		astx = rand() % 50 + 1;
+		astz = rand() % 50 + 1;
 		multx = rand() % 2 ? 1 : -1;
 		multz = rand() % 2 ? 1 : -1;
-		valx = (rand() % 30 +1) * 0.001;
-		valz = (rand() % 30 +1) * 0.001;
+		valx = (rand() % 20) * 0.001;
+		valz = (rand() % 20) * 0.001;
 		astDestroyed = false;
 
 	}
@@ -403,30 +424,185 @@ void Update(float deltaTime)
 		rotation = rotate(identity, moonRotate, vec3(0, 1, 0));
 		modelMatrix[AST] = translation * rotation * scaling;
 		
-		if (((venusPosition[0] - astx) < 1 + 0.5)&((venusPosition[2] - astz) < 1 + 0.5)){
-			astx -= 0.01;
-			astz -= 0.01;
+
+		/*************/
+		if (!earthDestroyed) {
+			if (((earthPosition[0] - astx) < 1 + 0.5 & (earthPosition[0] - astx) > 0)&((earthPosition[2] - astz) < 1 + 0.5 & (earthPosition[0] - astz) > 0)) {
+				astx -= 0.02;
+				astz -= 0.02;
+			}
+			else if (((earthPosition[0] - astx) > -1 - 0.5 & (earthPosition[0] - astx) < 0)&((earthPosition[2] - astz) > -1 - 0.5 & (earthPosition[0] - astz) < 0)) {
+				astx += 0.02;
+				astz += 0.02;
+			}
+
+			if ((abs(earthPosition[0] - astx) < 1)&(abs(earthPosition[2] - astz) < 1)) {
+				earthDestroyed = true;
+				astDestroyed = true;
+				modelMatrix[EARTH] = (mat4)0;
+				modelMatrix[AST] = (mat4)0;
+				earthPosition = (vec3)0;
+			}
 		}
-		else if (((venusPosition[0] - astx) > -1 - 0.5)&((venusPosition[2] - astz) > -1 - 0.5)) {
-			astx += 0.01;
-			astz += 0.01;
+		/*************/
+		if (!venusDestroyed) {
+			if (((venusPosition[0] - astx) < 1 + 0.5 & (venusPosition[0] - astx) > 0)&((venusPosition[2] - astz) < 1 + 0.5&(venusPosition[0] - astz) > 0)) {
+				astx -= 0.02;
+				astz -= 0.02;
+			}
+			else if (((venusPosition[0] - astx) > -1 - 0.5 &(venusPosition[0] - astx) < 0)&((venusPosition[2] - astz) > -1 - 0.5&(venusPosition[0] - astz) < 0)) {
+				astx += 0.02;
+				astz += 0.02;
+			}
+
+			if ((abs(venusPosition[0] - astx) < 1)&(abs(venusPosition[2] - astz) < 1)) {
+				venusDestroyed = true;
+				astDestroyed = true;
+				modelMatrix[VENUS] = (mat4)0;
+				modelMatrix[AST] = (mat4)0;
+				venusPosition = (vec3)0;
+			}
+		}
+		/*************/
+		if (!mercuryDestroyed) {
+			if (((mercuryPosition[0] - astx) < 0.3 + 0.5 & (mercuryPosition[0] - astx) > 0)&((mercuryPosition[2] - astz) < 0.3 + 0.5&(mercuryPosition[0] - astz) > 0)) {
+				astx -= 0.02*0.3;
+				astz -= 0.02*0.3;
+			}
+			else if (((mercuryPosition[0] - astx) > -0.3 - 0.5 &(mercuryPosition[0] - astx) < 0)&((mercuryPosition[2] - astz) > -0.3 - 0.5&(mercuryPosition[0] - astz) < 0)) {
+				astx += 0.02*0.3;
+				astz += 0.02*0.3;
+			}
+
+			if ((abs(mercuryPosition[0] - astx) < 0.3)&(abs(mercuryPosition[2] - astz) < 0.3)) {
+				mercuryDestroyed = true;
+				astDestroyed = true;
+				modelMatrix[MERCURY] = (mat4)0;
+				modelMatrix[AST] = (mat4)0;
+				mercuryPosition = (vec3)0;
+			}
+		}
+		/*************/
+		if (!moonDestroyed) {
+			if (((moonPosition[0] - astx) < 0.27 + 0.5 &(moonPosition[0] - astx) > 0)&((moonPosition[2] - astz) < 0.27 + 0.5&(moonPosition[0] - astz) > 0)) {
+				astx -= 0.02*0.27;
+				astz -= 0.02*0.27;
+			}
+			else if (((moonPosition[0] - astx) > -0.27 - 0.5&(moonPosition[0] - astx) < 0)&((moonPosition[2] - astz) > -0.27 - 0.5&(moonPosition[0] - astz) < 0)) {
+				astx += 0.02*0.27;
+				astz += 0.02*0.27;
+			}
+
+			if ((abs(moonPosition[0] - astx) < 0.27)&(abs(moonPosition[2] - astz) < 0.27)) {
+				moonDestroyed = true;
+				astDestroyed = true;
+				modelMatrix[MOON] = (mat4)0;
+				modelMatrix[AST] = (mat4)0;
+				moonPosition = (vec3)0;
+			}
+
+		}
+		/*************/
+		if (!marsDestroyed) {
+			if (((marsPosition[0] - astx) < 0.7 + 0.5&(marsPosition[0] - astx) > 0)&((marsPosition[2] - astz) < 0.7 + 0.5&(marsPosition[0] - astz) > 0)) {
+				astx -= 0.02*0.7;
+				astz -= 0.02*0.7;
+			}
+			else if (((marsPosition[0] - astx) > -0.7 - 0.5&(marsPosition[0] - astx) < 0)&((marsPosition[2] - astz) > -0.7 - 0.5&(marsPosition[0] - astz) < 0)) {
+				astx += 0.02*0.7;
+				astz += 0.02*0.7;
+			}
+
+			if ((abs(marsPosition[0] - astx) < 0.7)&(abs(marsPosition[2] - astz) < 0.7)) {
+				marsDestroyed = true;
+				astDestroyed = true;
+				modelMatrix[MARS] = (mat4)0;
+				modelMatrix[AST] = (mat4)0;
+				marsPosition = (vec3)0;
+			}
+
+		}
+		/*************/
+		if (!jupiterDestroyed) {
+			if (((jupiterPosition[0] - astx) < 5 + 0.5&(jupiterPosition[0] - astx) > 0)&((jupiterPosition[2] - astz) < 5 + 0.5&(jupiterPosition[0] - astz) > 0)) {
+				astx -= 0.02 * 5;
+				astz -= 0.02 * 5;
+			}
+			else if (((jupiterPosition[0] - astx) > -5 - 0.5&(jupiterPosition[0] - astx) < 0)&((jupiterPosition[2] - astz) > -5 - 0.5&(jupiterPosition[0] - astz) < 0)) {
+				astx += 0.02 * 5;
+				astz += 0.02 * 5;
+			}
+
+			if ((abs(jupiterPosition[0] - astx) < 5)&(abs(jupiterPosition[2] - astz) < 5)) {
+				jupiterDestroyed = true;
+				astDestroyed = true;
+				modelMatrix[JUPITER] = (mat4)0;
+				modelMatrix[AST] = (mat4)0;
+				jupiterPosition = (vec3)0;
+			}
 		}
 
-		if ((abs(venusPosition[0] - astx) < 1)&(abs(venusPosition[2] - astz) < 1)){
-			venusDestroyed = true;
-			astDestroyed = true;
-			modelMatrix[VENUS] = (mat4)0;
-			modelMatrix[AST] = (mat4)0;
+		/*************/
+		if (!saturnDestroyed) {
+			if (((saturnPosition[0] - astx) < 4 + 0.5&(saturnPosition[0] - astx) > 0)&((saturnPosition[2] - astz) < 4 + 0.5 && (saturnPosition[0] - astz) > 0)) {
+				astx -= 0.02 * 4;
+				astz -= 0.02 * 4;
+			}
+			else if (((saturnPosition[0] - astx) > -4 - 0.5&(saturnPosition[0] - astx) < 0)&((saturnPosition[2] - astz) > -4 - 0.5&(saturnPosition[0] - astz) < 0)) {
+				astx += 0.02 * 4;
+				astz += 0.02 * 4;
+			}
+
+			if ((abs(saturnPosition[0] - astx) < 4)&(abs(saturnPosition[2] - astz) < 4)) {
+				saturnDestroyed = true;
+				astDestroyed = true;
+				modelMatrix[SATURN] = (mat4)0;
+				modelMatrix[AST] = (mat4)0;
+				saturnPosition = (vec3)0;
+			}
+
 		}
-		
-		moonPosition[0], moonPosition[2];
-		mercuryPosition[0], mercuryPosition[2];
-		venusPosition[0], venusPosition[2];
-		marsPosition[0], marsPosition[2];
-		jupiterPosition[0], jupiterPosition[2];
-		saturnPosition[0], saturnPosition[2];
-		uranusPosition[0], uranusPosition[2];
-		neptunePosition[0], neptunePosition[2];
+		/*************/
+		if (!uranusDestroyed) {
+			if (((uranusPosition[0] - astx) < 2 + 0.5&(uranusPosition[0] - astx) > 0)&((uranusPosition[2] - astz) < 2 + 0.5&(uranusPosition[0] - astz) > 0)) {
+				astx -= 0.02 * 2;
+				astz -= 0.02 * 2;
+			}
+			else if (((uranusPosition[0] - astx) > -2 - 0.5&(uranusPosition[0] - astx) < 0)&((uranusPosition[2] - astz) > -2 - 0.5&(uranusPosition[0] - astz) < 0)) {
+				astx += 0.02 * 2;
+				astz += 0.02 * 2;
+			}
+
+			if ((abs(uranusPosition[0] - astx) < 2)&(abs(uranusPosition[2] - astz) < 2)) {
+				uranusDestroyed = true;
+				astDestroyed = true;
+				modelMatrix[URANUS] = (mat4)0;
+				modelMatrix[AST] = (mat4)0;
+				uranusPosition = (vec3)0;
+			}
+
+		}
+		/*************/
+		if (!neptuneDestroyed) {
+			if (((neptunePosition[0] - astx) < 3 + 0.5&(neptunePosition[0] - astx) > 0)&((neptunePosition[2] - astz) < 3 + 0.5&(neptunePosition[0] - astz) > 0)) {
+				astx -= 0.02 * 3;
+				astz -= 0.02 * 3;
+			}
+			else if (((neptunePosition[0] - astx) > -3 - 0.5&(neptunePosition[0] - astx) < 0)&((neptunePosition[2] - astz) > -3 - 0.5&(neptunePosition[0] - astz) < 0)) {
+				astx += 0.02 * 3;
+				astz += 0.02 * 3;
+			}
+
+			if ((abs(neptunePosition[0] - astx) < 3)&(abs(neptunePosition[2] - astz) < 3)) {
+				neptuneDestroyed = true;
+				astDestroyed = true;
+				modelMatrix[NEPTUNE] = (mat4)0;
+				modelMatrix[AST] = (mat4)0;
+				neptunePosition = (vec3)0;
+			}
+		}
+
+
 	}
 
 	//FreeCam(deltaTime);
